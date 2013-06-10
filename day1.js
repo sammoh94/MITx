@@ -5,6 +5,16 @@ a calculator that calculates numbers
 function calculate(text){
     var pattern = /\d+|\+|\-|\*|\/|\(|\)/g; //d+ is matching digits that atleast have a length of 1
     var tokens = text.match(pattern)
+    try{
+        var val = evaluation(tokens);
+        if (tokens.length !== 0 ){
+            throw "ill-formed expression";
+        }
+        return String(val);
+    }
+    catch(err){
+        return err;
+    }
     return JSON.stringify(tokens);
 }
 /*
@@ -24,29 +34,26 @@ function evaluation(token_array){
     }
     var value_1 = read_operand(token_array);
     while (token_array.length !== 0) {
-        var operator = token_array.shift();
+        var operator = token_array.shift()
+        var temp = read_operand(token_array);
+        
         if (operator === '+'){
-            continue;
+            var value_2 = parseInt(value_1) + parseInt(temp);
         }
-        if (operator === '-'){
-            continue;
+        else if (operator === '-'){
+            value_2 = parseInt(value_1) - parseInt(temp);
         }
-        if (operator === '*'){
-            continue;
+        else if (operator === '*'){
+            value_2 = parseInt(value_1) * parseInt(temp);
         }
-        if (operator === '/'){
-            continue;
+        else if (operator === '/'){
+            value_2 = parseInt(value_1) / parseInt(temp);
         }
         else{
             throw "unrecognized operator";
         }
-        if (token_array === 0){
-            throw "missing operand";
-        }
-        var temp = read_operand(token_array);
-        var value_2 = value_1+operator+temp; 
-    }
-    return value_2
+    }    
+    return value_2;
 }
 
 function setup_calc(div){
