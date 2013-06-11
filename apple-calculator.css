@@ -1,0 +1,41 @@
+
+
+.text {
+    background-color: #EFFAC8;
+    width:370px;
+    height: 88px;
+    border-radius: 7px;
+    text-align: right;
+    border-style: inset;
+    
+}
+button {
+    font-size:10pt;
+    margin-top: 9px;
+    margin-bottom:5px;
+    border-radius: 5px;
+    height: 50px;
+    width: 90px;
+    
+}
+button[id="equals"] {
+    height: 115px;
+}
+button[id="zero"] {
+    position: relative;
+    bottom: 64px;
+    width: 185px;
+}
+button[id="dot"] {
+    position: relative;
+    bottom: 64px;
+}
+button[id="one"], button[id="two"], button[id="three"] {
+    position: relative;
+    bottom: 32px;
+}
+
+button:hover{
+    border-width:5px;
+    background-color:#CC5959;
+}

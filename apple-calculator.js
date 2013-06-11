@@ -103,19 +103,10 @@ function evaluation(token_array){
 
 }
 
-function setup_calc(div){
-    var input = $('<input></input>',{type: "text", size: 50});
-    var output = $('<div class = "output"></div>');
-    var button  = $('<button>Calculate</button>');
-    button.bind("click", function (){
-       output.text(String(calculate(input.val()))); 
-    });
-    $(div).append(input, button, output);
-}
-
 $(document).ready(function (){
-   $('.calculator').each(function(){  // '.' is class, # is id
-       // this refers to the <div> with class calculator
-       setup_calc(this);
-   });  
+    var output = $('.text');
+    output.text('C');
+    $('.input').bind("click", function(){
+        output.text('C');
+    });  
 });

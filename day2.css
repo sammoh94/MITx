@@ -1,0 +1,48 @@
+
+h1 {
+    font-size: 24pt;
+    text-align: center;
+    font-family: fantasy;
+}
+
+.calculator {
+    font-size: 24pt;
+}
+
+.calculator .output{
+    background-color: #AEB3FF;
+    border-radius: 20px;
+    width: 570px;
+    padding: 20px;
+}
+
+.calculator .output:empty{
+    visibility: hidden;
+}
+
+.calculator button {
+    font-size: 16pt;
+    padding:20px;
+    margin: 20px;
+}
+
+.calculator input[type = "text"] {
+    font-size: 16pt;
+    padding: 20px;
+    margin-right: 50px;
+    
+}
+
+.calculator input[type = "text"]:hover {
+    border-width:5px;
+}
+
+.calculator input[type = "text"]:focus{
+    background-color:lightgreen;
+}
+
+/*#calc1 button {*/
+/*    font-size: 12pt;*/
+/*}*/
+
+/* this is how we comment in CSS */
