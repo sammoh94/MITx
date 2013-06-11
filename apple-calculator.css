@@ -13,9 +13,10 @@ button {
     font-size:10pt;
     margin-top: 9px;
     margin-bottom:5px;
-    border-radius: 5px;
+    border-radius: 10px;
     height: 50px;
     width: 90px;
+    background-color:#D6D6D6;
     
 }
 button[id="equals"] {
@@ -38,4 +39,10 @@ button[id="one"], button[id="two"], button[id="three"] {
 button:hover{
     border-width:5px;
     background-color:#CC5959;
+}
+
+.apple-calculate {
+    background-color:#B8B8B8;
+    width:390px;
+    height:490px;
 }
