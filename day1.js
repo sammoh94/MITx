@@ -107,10 +107,19 @@ function setup_calc(div){
     var input = $('<input></input>',{type: "text", size: 50});
     var output = $('<div class = "output"></div>');
     var button  = $('<button>Calculate</button>');
+    var one = $('<button>1</button>');
+    var two = $('<button>2</button>');
     button.bind("click", function (){
        output.text(String(calculate(input.val()))); 
     });
-    $(div).append(input, button, output);
+    one.bind("click", function (){
+       input.val(input.val()+'1'); 
+    });
+    two.bind("click", function (){
+       input.val(input.val()+'2'); 
+    });
+    $(div).append(input, button, one, two, output);
+    
 }
 
 $(document).ready(function (){
