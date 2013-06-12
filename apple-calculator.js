@@ -1,112 +1,104 @@
-
 /*
-a calculator that calculates numbers
+Calculates the input expression
 */
-function calculate(text){
-    var pattern = /\d+|\+|\-|\*|\/|\(|\)/g; //d+ is matching digits that atleast have a length of 1
-    var tokens = text.match(pattern)
-    try{
-        var val = evaluation(tokens);
-        if (tokens.length !== 0 ){
-            throw "ill-formed expression";
-        }
+function calculate(text) {
+    var pattern = /\d*\.?\d+|\+|\-|\*|\/|\w*\(|\)|\^|\%/g;          //matches nonzero digit sequences, operators and parentheses, g means global match
+    var tokens = text.match(pattern);
+    try {
+        var val = evaluate(tokens);
+        if(tokens.length > 0)   throw("ill-formed expression");
         return String(val);
-    }
-    catch(err){
+    } catch(err) {
         return err;
     }
-    return JSON.stringify(tokens);
 }
 /*
-a function that interprets the first token in the array
+Reads the next operand in the expression
 */
-function read_operand(token_array){
-    var symbol  = token_array[0];
-    var num = parseInt(symbol,10);
-    if (symbol === '('){
-        token_array.shift();
-        num = evaluation(token_array);
+function read_operand(array) {
+    var num = array.shift();
+    if(num == '(') {
+        num = evaluate(array);
+        if(array.shift() != ')')    throw("missing close parenthesis");
     }
-    else if (symbol == ")"){
-        return ")";
+    if(num == 'sin(') {
+        num = Math.sin(evaluate(array));
+        if(array.shift() != ')')    throw("missing close parenthesis");
     }
-    else if (isNaN(num)){
-        throw "number expected";
+    if(num == '-')  num += array.shift();
+    var out = parseFloat(num);
+    if(array[0] == '^') {
+        array.shift();
+        out = Math.pow(out,read_term(array))
     }
-    else if (symbol === '-'){
-        token_array.shift();
-        num = parseFloat(token_array[0],10);
-        token_array.shift();
-        return -1*num;
+    if(isNaN(out)) {
+        throw("number expected");
     }
-    else{
-        token_array.shift();
+    else {
+        return out;
     }
-    return num;
+}
+/*
+Evaluates the expression
+*/
+function evaluate(array) {
+    if(array.length === 0) {
+        throw("missing operand");
+    }
+    var val = read_term(array);
+    while(array.length > 0) {
+        if(array[0] == ')') return val;
+        var oper = array.shift();
+        if($.inArray(oper,['+','-']) == -1)   throw("unrecognized operator");
+        if(array.length === 0)  throw("missing operand");
+        var temp = read_term(array);
+        if(oper == '+') val = val+temp;
+        if(oper == '-') val = val-temp;
+    }
+    return val;
+}
+function read_term(array){
+    if(array.length === 0) {
+        throw("missing operand");
+    }
+    var val = read_operand(array);
+    while(array.length > 0 & ['+','-'].indexOf(array[0]) == -1) {
+        if(array[0] == ')') return val;
+        var oper = array.shift();
+        if($.inArray(oper,['*','/','%']) == -1)   throw("unrecognized operator");
+        if(array.length === 0)  throw("missing operand");
+        var temp = read_operand(array);
+        if(oper == '*') val = val*temp;
+        if(oper == '/') val = val/temp;
+        if(oper == '%') val = val%temp;
     }
     
-
+    return val;
+}
 /*
-function read_term(token_array){
-    for (var i = 0; i < token_array.length; i++) {
-        if (token_array[i]==='+' || token_array[i]==='-'){   
-            break;
-    }
-    else if (token_array.length === 0){
-        break;
-    }
-    }
-    var value_1 = read_operand(token_array);
-    while (token_array.length !== 0) {
-        var operator = token_array.shift()
-        var temp = read_operand(token_array);
-        
-        if (operator === '*'){
-            var value_2 = parseInt(value_1) * parseInt(temp);
-        }
-        else if (operator === '/'){
-            value_2 = parseInt(value_1) / parseInt(temp);
-        }
-}
-}
+Sets up the HTML calculator
 */
-function evaluation(token_array){
-    if (token_array.length === 0){
-        throw "missing operand";
-    }
-    var value_1 = read_operand(token_array);
-    while (token_array.length !== 0) {
-        if (token_array[0] === ')'){
-            token_array.shift();
-            return value_1;
-        }
-        var operator = token_array.shift();
-        var temp = read_operand(token_array);
-        
-        if (operator === '+'){
-            var value_2 = parseInt(value_1) + parseInt(temp);
-        }
-        else if (operator === '-'){
-            value_2 = parseInt(value_1) - parseInt(temp);
-        }
-        else if (operator === '*'){
-            value_2 = parseInt(value_1) * parseInt(temp);
-        }
-        else if (operator === '/'){
-            value_2 = parseInt(value_1) / parseInt(temp);
-        }
-        else{
-            throw "unrecognized operator";
-        }
-    }    
-    return value_2;
-
+function setup_calc(div) {
+    var input = $('<input></input>',{class: "text"});    //directly associating attributes to input
+    // var output = $('<div></div>');                      //single, double quotes don't matter in javascript
+    // var button = $('<button>Do thing</button>');
+    // button.bind('click',function(){
+    //     output.html('<div class="output"><span class="outtext">'+String(calculate(input.val()))+'</span></div>');    //val of input calculated, turned into string, added to output
+    // });
+    // $(div).append(input,button,output);                 //creates HTML thing in the div
+    var output = $('<div class="output"></div>');
+    var one = $('<button>1</button>');
+    one.bind("click", function(){
+       input.val(input.val()+'1');
+    });
+    $(div).append(input,one,output);
 }
-
-$(document).ready(function (){
-    var output = $('.text');
-    output.text('C');
-    $('.input').bind("click", function(){
-        output.text('C');
-    });  
+/*
+Calls setup when document is ready
+*/
+$(document).ready(function(){
+    $('.apple-calculator').each(function(){                   //javascript for loop, dot means class, # means id
+        setup_calc(this);
+       ;//passes each div as the argument for 'setup_calc'
+    });
 });

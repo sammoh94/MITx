@@ -1,14 +1,16 @@
 
-
 .text {
     background-color: #EFFAC8;
-    width:370px;
-    height: 88px;
+    width:270px;
+    height: 84px;
     border-radius: 7px;
     text-align: right;
     border-style: inset;
-    
+    font-family: "Arial";
+    font-size: 25pt;
+    padding: 2px 50px 2px 50px;
 }
+
 button {
     font-size:10pt;
     margin-top: 9px;
@@ -17,7 +19,9 @@ button {
     height: 50px;
     width: 90px;
     background-color:#D6D6D6;
-    
+    font-family: "Arial";
+    font-size: 25pt;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
 }
 button[id="equals"] {
     height: 115px;
@@ -37,11 +41,15 @@ button[id="one"], button[id="two"], button[id="three"] {
 }
 
 button:hover{
-    border-width:5px;
-    background-color:#CC5959;
+    /*border-width:5px;*/
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
 }
 
 .apple-calculate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: -webkit-linear-gradient(top, #DBDBDB, #AFAFAF);
     background-color:#B8B8B8;
     width:390px;
     height:490px;
