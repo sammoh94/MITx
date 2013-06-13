@@ -3,38 +3,74 @@ var graphcalc = (function(){
     function graph(canvas,functionInp,min,max){
         var tree= calculator.parse(functionInp);
         var dom=canvas[0];
-        var output=[];
-        for(var i=0;i<dom.width;i++){
-            var value=calculator.evaluate(tree,{x:min+i/(1.0*min+max),e:Math.e,pi:Math.PI});//1.0* to make it floating
-            output.push(value);
+        var gcanvas = $("<canvas></canvas>")[0]; //DOM object
+        gcanvas.width = canvas.width;
+        gcanvas.height = canvas.height-10;
+        
+        var gctx = gcanvas.getContext('2d');
+        
+        var ctx = canvas.getContext('2d');
+        
+        console.log(output);
+        
+        var maxx=calculator.evaluate(calculator.parse(max));//max amp
+        
+        var minn=calculator.evaluate(calculator.parse(min));//min amp
+        
+        var xStep = (maxx-minn/(400));
+        var xval = [];
+        // filling the values of x in the array
+        for (var i = 0; i < 400; i++) {
+            xval.push(i*xStep+min);
+        }
+        var yval=[];
+        // filling the corresponding values of y for each x into an array
+        for(var i=0;i<=xval.length;i++){
+            var value=calculator.evaluate(tree,{x:xval[i],e:Math.E,pi:Math.PI});//1.0* to make it floating
+            yval.push(value);
+        }
+        // determine the actual min-y/max-y value
+        var myMinY = yval[100];
+        var myMaxY = yval[210];
+        for (var val = 0; val < yval.length; val++) {
+            if (yval[val]<myMinY){
+                myMinY = xval[val];
+            }
+            if ((yval[val])>myMaxY){
+                myMaxY = yval[valy]; 
+            }
+            
+        }
+        // fill up the graph with values so that it can be drawn
+        var yStep = 1.25*(myMaxY-myMinY)/400;
+        var xyGraph = [];
+        for (var j = 0; j <yval.length; j++) {
+            xyGraph[j] = 200 - Math.floor(yval[j]/yStep);
         }
         
-        var ctx = dom.getContext('2d');
-        console.log(output);
-        var maxx=Math.max.apply(Math, output);//max amp
-        var minn=Math.min.apply(Math,output);//min amp
-            
-        var gcanvas = $("<canvas></canvas>")[0]; //DOM object
+        gctx.strokeStyle = "red";
+        gctx.lineWidth = 2;
+        gctx.beginPath();
         
-        gcanvas.width = dom.width;
-        gcanvas.height = dom.height-10;
-        var gctx = gcanvas.getContext('2d');
-        gctx.moveTo(0,dom.height-(output[0]-minn)/(maxx-minn)*dom.height);
-        for(var i=0;i<dom.width-1;i++){
-            
-            gctx.lineTo(i+1, dom.height-(output[i+1]-minn)/(maxx-minn)*dom.height);
+        gctx.moveTo(0,xyGraph[0]);
+        for(var i=0;i<xyGraph.length;i++){
+            gctx.lineTo(i, xyGraph[i]);
             
         }
         gctx.stroke();
-        ctx.drawImage(gcanvas,0,5);// to leave upper and lower border by 5 pixcels
-        canvas.on("mousemove",function(event){
-            var mx = event.pageX;
-            var my = event.pageY;
-            var offset = canvas.offset();//{left: ..., top: ...}
-            mx = Math.round(mx-offset.left);
-            my=Math.round(my-offset.top);
+        ctx.drawImage(gcanvas,0,0);
+        return gcanvas;// to leave upper and lower border by 5 pixcels
+
+        
+        // to leave upper and lower border by 5 pixcels
+        // canvas.on("mousemove",function(event){
+        //     var mx = event.pageX;
+        //     var my = event.pageY;
+        //     var offset = canvas.offset();//{left: ..., top: ...}
+        //     mx = Math.round(mx-offset.left);
+        //     my=Math.round(my-offset.top);
             
-        })
+        // })
         
     }    
     function setup(div){
