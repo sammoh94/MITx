@@ -49,12 +49,35 @@ var Inspector = function($) {
 
   };
 
+  var changePage = function(e){
+    console.log(e);
+    if (e.keyCode == 13){
+      e.preventDefault();
+      e.stopPropagation();
+      var textEditor = root.find(".text-editor");
+      var init_val = textEditor.val();
+      var selectorbox = root.find('.selector');
+      var selectorStr = selectorbox.val();
+      var selection = $(selectorStr);
+      selection.html(init_val);
+
+    }
+  };
+
+  var displayProperty = function(){
+    var selectorbox = root.find('.selector');
+    var selectorStr = selectorbox.val();
+    var selection = $(selectorStr);
+    var propertyStr = root.find('.property-editor').val();
+    
+  };
+
   exports.initialize = function() {
     root = $("<div class='inspector'></div>").appendTo($('body'));
     root.append(template);
     root.find(".handle").on("click", toggle);
     root.find(".node-lookup button").on("click", searchBySelector);
-
+    root.find(".text-editor").on("keydown", changePage);
   };
 
   exports.toggle = toggle;
