@@ -39,14 +39,27 @@ var graphcalc = (function(){
     }    
     function setup(div){
         var canvas = $('<canvas></canvas>');
-        var func = $('<input id = "func">f(x)</input>', {type:"text",size:50});
-        var min = $('<input>min</input>', {type: "text", size: 50});
-        var max = $('<input>max</input>', {type: "text", size: 50});
+        
+        var inputdiv = $('<div></div>');
+        var inputfield = $('<div>f(x):</div>');
+        var func = $('<input></input>', {id: "funck", type:"text",size:50});
+        inputfield.append(func);
+        
+        var minmaxfield = $('<div>min x:</div>');
+        var min = $('<input></input>', {id: "minkey", type: "text", size: 50});
+        minmaxfield.append(min);
+        
+        var max = $('<input></input>', {id: "max",type: "text", size: 50});
+        minmaxfield.append("     max:");
+        minmaxfield.append(max);
+        
         var plot = $('<button>Plot</button>');
         plot.bind("click", function(){
             graph(canvas,func.val(),min.val(),max.val());
         });
-        $(div).append(canvas,func,min,max,plot);
+        inputdiv.append(inputfield);
+        inputdiv.append(minmaxfield);
+        $(div).append(canvas,inputdiv,plot);
         
         
     }
