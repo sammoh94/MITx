@@ -57,11 +57,15 @@ var graphcalc = (function(){
         plot.bind("click", function(){
             graph(canvas,func.val(),min.val(),max.val());
         });
+        var clear = $('<button>Clear</button>');
+        clear.bind("click",function(){
+            func.val('');
+            min.val('');
+            max.val('');
+        });
         inputdiv.append(inputfield);
         inputdiv.append(minmaxfield);
-        $(div).append(canvas,inputdiv,plot);
-        
-        
+        $(div).append(canvas,inputdiv,plot,clear);
     }
     exports.setup = setup;
    
