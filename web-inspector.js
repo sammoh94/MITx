@@ -19,6 +19,7 @@ var Inspector = function($) {
     + "       <button>Search</button>"
     + "    </div>"
     + "    <div class='property-list'>"
+    + "     <p class = 'para'></p>"
     + "    </div>" 
     + "  </div>" 
     + "</div>" 
@@ -46,11 +47,11 @@ var Inspector = function($) {
     var html = selection.html();
     var textEditor = root.find(".text-editor");
     textEditor.val(html);
+    displayProperty();
 
   };
 
   var changePage = function(e){
-    console.log(e);
     if (e.keyCode == 13){
       e.preventDefault();
       e.stopPropagation();
@@ -64,13 +65,26 @@ var Inspector = function($) {
     }
   };
 
-  var displayProperty = function(){
+  function displayProperty() {
     var selectorbox = root.find('.selector');
     var selectorStr = selectorbox.val();
     var selection = $(selectorStr);
-    var propertyStr = root.find('.property-editor').val();
-    
-  };
+    var properties = root.find('.para');
+    var propertyDisplay = root.find('.property-list');
+    var w = "width: "+selection.width()+"\n";
+    var h = "height: "+selection.height()+"\n";  
+    var name = "Tag Type: "+ selection.get(0).tagName.toLowerCase();
+    var position = selection.offset();
+    var positionStr = " Position: "+"("+position.left+","+position.top+")";
+    var children = String(selection.children().length);
+    var childrenStr = " Children: "+children;
+    var strDisplay = h+" "+w+name+positionStr+childrenStr;
+
+    propertyDisplay.html(strDisplay);
+    propertyDisplay.css("color","black");
+    propertyDisplay.css("font-size","14pt");
+
+}
 
   exports.initialize = function() {
     root = $("<div class='inspector'></div>").appendTo($('body'));
