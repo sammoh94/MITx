@@ -16,7 +16,7 @@ var Inspector = function($) {
     + "  <div class='property-editor'>"
     + "    <div class='node-lookup'>"
     + "      <input class='selector' /><input class='nth' />"
-    + "       <button>Search</button>"
+    + "       <button id = 'node-search'>Search</button>"
     + "    </div>"
     + "    <div class='property-list'>"
     + "     <p class = 'para'></p>"
@@ -69,7 +69,7 @@ var Inspector = function($) {
     var selectorbox = root.find('.selector');
     var selectorStr = selectorbox.val();
     var selection = $(selectorStr);
-    var properties = root.find('.para');
+    // var properties = root.find('.para');
     var propertyDisplay = root.find('.property-list');
     var w = "width: "+selection.width()+"\n";
     var h = "height: "+selection.height()+"\n";  
@@ -77,14 +77,18 @@ var Inspector = function($) {
     var position = selection.offset();
     var positionStr = " Position: "+"("+position.left+","+position.top+")";
     var children = String(selection.children().length);
+    $('.property-editor').animate({"":"100px"},500);
     var childrenStr = " Children: "+children;
     var strDisplay = h+" "+w+name+positionStr+childrenStr;
 
     propertyDisplay.html(strDisplay);
     propertyDisplay.css("color","black");
     propertyDisplay.css("font-size","14pt");
-
+  
 }
+
+  
+
 
   exports.initialize = function() {
     root = $("<div class='inspector'></div>").appendTo($('body'));
@@ -92,6 +96,11 @@ var Inspector = function($) {
     root.find(".handle").on("click", toggle);
     root.find(".node-lookup button").on("click", searchBySelector);
     root.find(".text-editor").on("keydown", changePage);
+    $('.node-lookup .selector').on("keydown",function(e){
+      if (e.shiftKey){
+        searchBySelector();
+    }
+  });
   };
 
   exports.toggle = toggle;
