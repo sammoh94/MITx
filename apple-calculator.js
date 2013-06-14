@@ -78,27 +78,29 @@ function read_term(array){
 /*
 Sets up the HTML calculator
 */
-function setup_calc(div) {
-    var input = $('<input></input>',{class: "text"});    //directly associating attributes to input
-    // var output = $('<div></div>');                      //single, double quotes don't matter in javascript
-    // var button = $('<button>Do thing</button>');
-    // button.bind('click',function(){
-    //     output.html('<div class="output"><span class="outtext">'+String(calculate(input.val()))+'</span></div>');    //val of input calculated, turned into string, added to output
-    // });
-    // $(div).append(input,button,output);                 //creates HTML thing in the div
-    var output = $('<div class="output"></div>');
-    var one = $('<button>1</button>');
-    one.bind("click", function(){
-       input.val(input.val()+'1');
-    });
-    $(div).append(input,one,output);
-}
+
+  
+    
+    
+    
+
 /*
 Calls setup when document is ready
 */
 $(document).ready(function(){
-    $('.apple-calculator').each(function(){                   //javascript for loop, dot means class, # means id
-        setup_calc(this);
-       ;//passes each div as the argument for 'setup_calc'
-    });
+      var input = '';
+    $(".button").bind("click", function(event) {
+        input+=$(event.target).text()
+        $("#txtbox").text(input);
 });
+   $('#equals').bind("click",function(){                   
+        $("#txtbox").text(calculate(input));
+    });
+    
+    $('#c').bind("click",function(){
+        input = '';
+        $("#txtbox").text(input);
+    });
+    
+});
+
