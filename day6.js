@@ -1,19 +1,22 @@
 var quiz = (function(){
    var exports = {};
    
-   var questions = [{question_text:"what is the air speed of an unladen swallow?", answers:["32 mph", "42 kph","16 m/s","african or european?"], solutionIndex:3}];
+   var questions = [{question_text:"What is the Air Speed of an Unladen Swallow?", answers:["32 mph", "42 kph","16 m/s","african or european?"], solutionIndex:3},
+   {question_text:"What is capital of Estonia?", answers:["Riga", "Talinn","Pristina","Budapest"], solutionIndex:1},
+      {question_text:"Who won the 2008 World Series", answers:["Red Sox", "Yankees","Phillies","Rays"], solutionIndex:2}];
    //Holds a DOM object  with the question text, 
    //ex. question.question_text="what is the air speed of an unladen swallow?" 
    //    question.answers=["32 mph", "42 kph","16 m/s","african or european?"]
-   //    question.solutionIndex=4;
+   //    question.solutionIndex=4;]
+
+   console.log(questions[1].question_text);
    
    var answers = [];
    //holds the answers of the student for comparison
    
    var score=0;
-   
-   var currentQuestionIndex=0;
-   
+
+   var currentQuestionIndex = 0;
    // function to check answer, takes in 
    //q, question index
    //a, student answe index
@@ -27,16 +30,22 @@ var quiz = (function(){
    };
    
    function setup(){
+       // var abc = localStorage.getItem('currentQuestion');
+       // if (abc){
+       //  currentQuestionIndex = abc;
+       // }
        displayQuestion();
+
    }
    function getCurrentQuestion(){
-       return questions[currentQuestionIndex];
+    return questions[currentQuestionIndex];
+
    }
    function displayQuestion(){
        
        var wrapperDiv=$('<form></form>', {class:'questionWrapper'});
        
-       //for(var x = 0; x<questions.length; x++){
+       
            var questionDiv=$('<div></div>', {class:'questionDiv'});
            var questionObj=getCurrentQuestion();
            var questionIndex=currentQuestionIndex+1;
@@ -52,11 +61,13 @@ var quiz = (function(){
            }
            wrapperDiv.append(questionDiv);
            
-       //}
-       $('.quizDiv').append(wrapperDiv);
        
+       $('.quizDiv').append(wrapperDiv);
+
+       var buttonDiv = $('<div/>');
        var checkButton=$('<button/>', {class:'checkAnswer'});
        checkButton.append('check answer');
+       buttonDiv.append(checkButton)
        checkButton.on('click', checkAnswer);
        function checkAnswer(event){
            var userSelect=$('input[name='+questionName+']:checked');
@@ -64,19 +75,34 @@ var quiz = (function(){
            var correct=checkCorrect(currentQuestionIndex, userSelect.attr('data_index'));
            console.log(correct);
            if(correct){
+              score+=1;
                userSelect.parent().append('<span class=\'correctAnswer>\'>Correct!<\span>');
                console.log(userSelect.html());
+               checkButton.disabled = true;
+
            }else
            {
                userSelect.parent().append('<span class=\'incorrectAnswer>\'>incorrect!<\span>');
                console.log(userSelect.html());
            }
        }
+
+       var nextButton = $('<button/>');
+       nextButton.append('Next Question');
+       buttonDiv.append(nextButton);
+       nextButton.on("click",function(){
+        currentQuestionIndex+=1;
+        $('.quizDiv').html('');
+        displayQuestion();
+       });
        
-       $('.quizDiv').append(checkButton);
+       $('.quizDiv').append(buttonDiv);
+       $('.quizDiv').append("score: "+score);
        
        console.log('questions have been displayed');
        
+       // localStorage.setItem('currentQuestion', 1);
+
        
    }
    exports.setup=setup;
