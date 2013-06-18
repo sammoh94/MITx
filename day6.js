@@ -57,12 +57,17 @@ var quiz = (function(){
           localStorage['currentQuestionIndex']++;
           currentQuestionIndex++;
         }
+
+   function clearLocalStorage(){
+    localStorage.clear();
+   }     
    
    function setup(){
        // var abc = localStorage.getItem('currentQuestion');
        // if (abc){
        //  currentQuestionIndex = abc;
        // }
+       clearLocalStorage();
        useLocalStorage();
        displayQuestion();
 
@@ -79,7 +84,7 @@ var quiz = (function(){
        
            var questionDiv=$('<div></div>', {class:'questionDiv'});
            var questionObj=getCurrentQuestion();
-           var questionIndex=currentQuestionIndex+1;
+           var questionIndex=getCurrentQuestionIndex()+1;
            questionDiv.append(questionIndex+'. '+questionObj.question_text);
            var questionName = 'question'+String(questionIndex);
            questionDiv.append('<br>');
@@ -122,9 +127,14 @@ var quiz = (function(){
        nextButton.append('Next Question');
        buttonDiv.append(nextButton);
        nextButton.on("click",function(){
-        currentQuestionIndex+=1;
+        if (getCurrentQuestionIndex()+1==questions.length){
+          $('.quizDiv').html('YOU ARE DONE!!!!!!!!!. YOU GOT A SCORE OF: '+(getCurrentScore()/3)*100+" percent.");
+        }
+        else{
+        incrementIndex();        
         $('.quizDiv').html('');
         displayQuestion();
+      }
        });
        
        $('.quizDiv').append(buttonDiv);
