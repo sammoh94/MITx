@@ -25,20 +25,51 @@ var quiz = (function(){
        return getCurrentQuestion().solutionIndex==a;
    };
    
+   function useLocalStorage(){
+    if (localStorage['score']==null){
+      localStorage['score']=0;
+    }
+
+    if(localStorage['currentQuestionIndex']==null){
+      localStorage['currentQuestionIndex']=0;
+    }
+
+   }
+
    function incrementScore(){
+    localStorage['score']++;
      return score++;  
    };
+
+   function getCurrentScore(){
+    var current_score = localStorage['score'];
+    return current_score;
+   }
+
+   function getCurrentQuestionIndex(){
+    if(localStorage['currentQuestionIndex'] != null){
+    localStorage['currentQuestionIndex'] = currentQuestionIndex;
+  }
+    return currentQuestionIndex;
+   }
+
+   function incrementIndex(){
+          localStorage['currentQuestionIndex']++;
+          currentQuestionIndex++;
+        }
    
    function setup(){
        // var abc = localStorage.getItem('currentQuestion');
        // if (abc){
        //  currentQuestionIndex = abc;
        // }
+       useLocalStorage();
        displayQuestion();
+
 
    }
    function getCurrentQuestion(){
-    return questions[currentQuestionIndex];
+    return questions[getCurrentQuestionIndex()];
 
    }
    function displayQuestion(){
@@ -75,7 +106,7 @@ var quiz = (function(){
            var correct=checkCorrect(currentQuestionIndex, userSelect.attr('data_index'));
            console.log(correct);
            if(correct){
-              score+=1;
+               incrementScore();               
                userSelect.parent().append('<span class=\'correctAnswer>\'>Correct!<\span>');
                console.log(userSelect.html());
                checkButton.disabled = true;
