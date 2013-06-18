@@ -1,5 +1,10 @@
 var quiz = (function(){
    var exports = {};
+
+   //booleans for using either localStorage or parseStorage
+
+   var localStorageBoolean = false;
+   var parseStorageBoolean = false;
    
    var questions = [{question_text:"What is the Air Speed of an Unladen Swallow?", answers:["32 mph", "42 kph","16 m/s","african or european?"], solutionIndex:3},
    {question_text:"What is capital of Estonia?", answers:["Riga", "Talinn","Pristina","Budapest"], solutionIndex:1},
@@ -37,24 +42,32 @@ var quiz = (function(){
    }
 
    function incrementScore(){
+    if (localStorageBoolean){
     localStorage['score']++;
+  }
      return score++;  
    };
 
    function getCurrentScore(){
+    if (localStorageBoolean){
     var current_score = localStorage['score'];
+  }
     return current_score;
    }
 
    function getCurrentQuestionIndex(){
+    if (localStorageBoolean){
     if(localStorage['currentQuestionIndex'] != null){
     localStorage['currentQuestionIndex'] = currentQuestionIndex;
+  }
   }
     return currentQuestionIndex;
    }
 
    function incrementIndex(){
+    if (localStorageBoolean){}
           localStorage['currentQuestionIndex']++;
+      }
           currentQuestionIndex++;
         }
 
@@ -67,12 +80,16 @@ var quiz = (function(){
        // if (abc){
        //  currentQuestionIndex = abc;
        // }
+       if (localStorageBoolean){
        clearLocalStorage();
        useLocalStorage();
-       displayQuestion();
+     }
+     if (parseStorageBoolean){;
+     }
+    displayQuestion();
+  }
 
 
-   }
    function getCurrentQuestion(){
     return questions[getCurrentQuestionIndex()];
 
