@@ -9,13 +9,14 @@
 var outer_height = 300;
 var outer_width = 300;
 
-var n = 4;
 var stack = d3.layout.stack();
 var stacked_data = stack(data);
 console.log(stacked_data);
 
 var y_stack_max = d3.max(stacked_data, function(layer){return d3.max(layer,function(d){return d.y + d.y0;})});
 var y_group_max = d3.max(stacked_data,function(layer){return d3.max(layer,function(d){return d.y;})});
+
+var chartColor1 = d3.scale.linear().domain([1,10]).range(['#FF0000', '#620101']);
 
 var margin = {top: 20, right: 20, bottom: 20, left: 20};
 
@@ -46,8 +47,21 @@ var rects = layer_groups.selectAll("rect").data(function(d){return d;})
 	.attr("x", function(d,i){return x_scale(i);})
 	.attr("y", function(d){return y_scale(d.y+d.y0);})
 	.attr("width",x_scale.rangeBand())
-	.attr("fill", function (d, i, j) { return "rgb(" + Math.floor(Math.random()*200) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")"; })	
-	.attr("height", function(d){return y_scale(d.y0)-y_scale(d.y0+d.y);});
+	.attr("height", function(d){return y_scale(d.y0)-y_scale(d.y0+d.y);})
+	.style("fill", function (d, i, j) { 
+		if (j===0){
+		return "rgb(110,20,60)";
+		}
+		else if (j===1){
+		return "rgb(190,190,190)";
+		}
+		else if (j===2){
+		return "rgb(20,10,190)";
+		}
+		else{
+			return "rgb(221,229,110)";
+		}
+	});
 
 // chart.selectAll("rect").data(data)
 // 	.enter().append("rect")
