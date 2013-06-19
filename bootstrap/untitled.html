@@ -1,0 +1,84 @@
+
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+ -->    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">  
+    <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="website.js"></script>
+  </head>
+  <body background = "turf.jpg">
+    <div class = "navbar navbar-fixed-bottom">
+      <div class = "navbar-inner">
+        <div class = "container">
+        <a class = "brand" href="#"><i class = "icon-youtube-play"></i></a>
+        <a class = "brand" href="https://twitter.com/ATPWorldTour"><i class = "icon-twitter-sign"></i></a>
+        <a class = "brand" href="https://www.facebook.com/ATPWorldTour"><i class = "icon-facebook"></i></a>
+        <a class = "brand">Subscribe</a>
+        <div class = "btn-group"><a class = "btn dropdown-toggle" data-toggle = "dropdown" href = "#">Language:English<span class = "caret"></span></a>
+        <ul class = "dropdown-menu"><li>French</li><li>German</li><li>Dutch</li><li>Spanish</li></ul></div>
+           <form class = "navbar-search pull-right"><input type = "text" class = "search-query" placeholder = "Search"></form>
+         </div>
+      </div>
+    </div>
+    <div class = "page-header" style = "margin-left:10px;">
+      <h1 style = "background-color:#93A849;padding:10px;"><img src="logo.jpg">MOHAN TENNIS CLUB</img></h1>
+    </div>
+
+  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="myModalLabel">Mohan Tennis Club - Register</h3>
+    </div>
+    <div class="modal-body">
+      <p>
+        <form>
+          <input placeholder = "Full Name">*</input>
+          <br><br>
+          <input placeholder = "Email">*</input>
+          <br><br>
+          <input placeholder = "Address 1">*</input>
+          <br><br>
+          <input placeholder = "Address 2"></input>
+          <br><br>
+          <input placeholder = "City/Town">*</input>
+          <br><br>
+          <input placeholder = "Zip">*</input>
+        </form>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Clear</button>
+      <button class="btn btn-primary">Sign Up</button>
+    </div>
+  </div>
+
+    <div class = "container-fluid">            
+        <div class = "row-fluid">
+             <div class = "span4" style = "color:#B069D3;margin-left:400px;margin-right:10px;margin-bottom:20px;width:300px;height:160px;margin-top:10px;">
+             <p><h2>History of the Game</h2>
+          <button class = "btn" style = "margin-left:50px;margin-top:20px;"><a href = "http://www.wikipedia.com">Read More</a></button>
+        </div>
+        <div class = "span3" style = "background-color:white;width:300px;height:300px;border:solid black 2px;">
+          <div class = "accordion" id = "accordion2">
+
+
+          </div>
+          </div>
+        <div class = "span4" style = "background:turf.jpg;width:200px;height:100px;color:#B069D3;" >
+          Interested in Joining the Club? Just click the link below..
+          <a href="#myModal" role="button" class="btn" data-toggle="modal" style = "margin-top:10px;margin-left:170px;background:orange;">Register</a></div>
+        </div>
+      </div> 
+
+  <div class = "page-footer">
+    Copyright 2006-2013 The Mohan Corporation
+  </div>
+    <!-- ^^the closing div tag for container -->
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
