@@ -1,6 +1,4 @@
 
-
-
 var counter = (function () {
     // Event manager (see backbone.js for a "real" implementation)
     //   .on(event_string,callback)
@@ -51,12 +49,16 @@ var counter = (function () {
 	    count += 1;
 	    event_handlers.trigger("increment",count);
 	}
+	function clearE(){
+		count = 0;
+		event_handlers.trigger("cleared",count);
+	}
 
 	function get_count() {
 	    return count;
 	}
 
-	return {on: event_handlers.on, increment: increment, get_count: get_count};
+	return {on: event_handlers.on, increment: increment, get_count: get_count, clearE: clearE};
     }
 
     // exports:
@@ -67,7 +69,11 @@ var counter = (function () {
 	    model.increment();
 	}
 
-	return { increment: increment };
+	function reset(){
+		model.clearE();
+	}
+
+	return { increment: increment, reset: reset };
     }
 
 
@@ -85,7 +91,12 @@ var counter = (function () {
 	function update_display(value) {
 	    counter_value.text(value);
 	}
+
+	function clear_display(){
+		counter_value.text(0);
+	}
 	model.on("increment",update_display);
+	model.on("cleared", clear_display);
 
 	return {};
     }
@@ -99,8 +110,11 @@ var counter = (function () {
 
 	var button = $('<button>Increment</button>');
 	button.on("click",controller.increment);
-	div.append(button);
+	var clear = $('<button>Clear</button>');
+	clear.on("click",controller.reset);
+	div.append(button,clear);
     }
+
 
     // items accessible to outsiders
     return { setup: setup };
