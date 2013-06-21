@@ -1,0 +1,29 @@
+
+body {
+	max-width: 100%;
+	max-height: 100%;
+	background-size: cover;
+	background-attachment: fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+/*.navbar-search{
+	position: absolute;
+}*/
+
+.knapdiv{
+	background-color: yellow;
+	width:300px;
+	height:300px;
+	position: absolute;
+	left:60%;
+	bottom:30%;
+}
+
+.homediv{
+	background-color: yellow;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+}
