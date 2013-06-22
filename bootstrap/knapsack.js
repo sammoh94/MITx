@@ -44,11 +44,11 @@ var knapsack = (function(){
 		}
 		function moveObject(item){
 
-			if (item.loc == "Fridge"){
+			if (item.loc == "fridge"){
 				if (currentknapsackWeight+item.itemWeight<=maxWeight){
-					item.loc = "Knapsack";
-					currentknapsackWeight-=item.itemWeight;
-					currentknapsackValue-=item.itemValue;
+					item.loc = "knapsack";
+					currentknapsackWeight+=item.itemWeight;
+					currentknapsackValue+=item.itemValue;
 				}
 
 				else{
@@ -57,10 +57,10 @@ var knapsack = (function(){
 				}
 			}
 
-			else if (item.loc == "Knapsack"){
-				item.loc = "Fridge";
-				currentknapsackWeight+=item.itemWeight;
-				currentknapsackValue+=item.itemValue;
+			else if (item.loc == "knapsack"){
+				item.loc = "fridge";
+				currentknapsackWeight-=item.itemWeight;
+				currentknapsackValue-=item.itemValue;
 			}
 			event_handler.trigger("moved", item);
 		}
@@ -91,12 +91,12 @@ var knapsack = (function(){
 			return model.initPosition();
 		}
 
-		function clicked(){
+		function clicked(item){
 			if(!model.moveObject(item)){
 				event_handlers.trigger("fullsack",item);
 			}
 			else{
-				model.moveObject();
+				model.moveObject(item);
 			}
 		}
 
@@ -132,26 +132,30 @@ var knapsack = (function(){
 
 	function setup(div){
 
+		var model = Model(listOfItems,30);
+		var controller = Controller(model);
+		var view = View(div,model,controller);
+
 		var listOfItems = [];
 		listOfItems.push(
 			{
 				name: "soda",
-				loc: "Fridge",
+				loc: "fridge",
 				itemWeight: "2",
 				itemValue: "4"
 			},{
 				name: "fruits",
-				loc: "Fridge",
+				loc: "fridge",
 				itemValue: "10",
 				itemWeight: "6"
 			},{
 				name: "pizza",
-				loc: "Fridge",
+				loc: "fridge",
 				itemValue:"15",
 				itemWeight:"8"
 			},{
 				name: "bread",
-				loc:"Fridge",
+				loc:"fridge",
 				itemValue:"30",
 				itemWeight:"14"
 			}
@@ -159,21 +163,31 @@ var knapsack = (function(){
 		
 		$('.fridge').on("click", function(event){
 			var clickedItemId = event.target.id;
+			var clickedItemLoc = event.target.className;
 			console.log(clickedItemId);
 			for (var itemId in listOfItems){
-				if (clickedItemId === listOfItems[itemId].name){
-					console.log(listOfItems[itemId].itemWeight);
+				if (clickedItemId === listOfItems[itemId].name && clickedItemLoc == listOfItems[itemId].loc){
+					controller.clicked(listOfItems[itemId]);
+					event.target.remove();
+					console.log(listOfItems[itemId].loc)
 				}
 			}
-			
-			// if (currentLoc === "fridge"){
-			// 	console.log();
-			// }
 		});
 
-		var model = Model(listOfItems,30);
-		var controller = Controller(model);
-		var view = View(div,model,controller);
+		$('.knapsack').on("click", function(event){
+			var clickedItemId = event.target.id;
+			var clickedItemLoc = event.target.className;
+			console.log(clickedItemId);
+			for (var itemId in listOfItems){
+				if (clickedItemId === listOfItems[itemId].name && clickedItemLoc == listOfItems[itemId].loc){
+					controller.clicked(listOfItems[itemId]);
+					console.log(listOfItems[itemId].loc)
+				}
+			}
+		});
+
+
+		
 	}
 	return {setup:setup}
 }());
