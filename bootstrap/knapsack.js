@@ -135,27 +135,41 @@ var knapsack = (function(){
 		var listOfItems = [];
 		listOfItems.push(
 			{
-				image: "soda.png",
+				name: "soda",
 				loc: "Fridge",
 				itemWeight: "2",
 				itemValue: "4"
 			},{
-				image: "fruits.png",
+				name: "fruits",
 				loc: "Fridge",
 				itemValue: "10",
 				itemWeight: "6"
 			},{
-				image: "pizza.png",
+				name: "pizza",
 				loc: "Fridge",
 				itemValue:"15",
 				itemWeight:"8"
 			},{
-				image: "bread.png",
+				name: "bread",
 				loc:"Fridge",
 				itemValue:"30",
 				itemWeight:"14"
 			}
 		);
+		
+		$('.fridge').on("click", function(event){
+			var clickedItemId = event.target.id;
+			console.log(clickedItemId);
+			for (var itemId in listOfItems){
+				if (clickedItemId === listOfItems[itemId].name){
+					console.log(listOfItems[itemId].itemWeight);
+				}
+			}
+			
+			// if (currentLoc === "fridge"){
+			// 	console.log();
+			// }
+		});
 
 		var model = Model(listOfItems,30);
 		var controller = Controller(model);
