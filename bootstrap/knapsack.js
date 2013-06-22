@@ -29,27 +29,26 @@ var knapsack = (function(){
 	return {on: on, trigger: trigger};
     }    
 
-	function Model(items,knapMaxWeight, knapMaxVal){
+	function Model(items,knapMaxWeight){
 		var maxWeight = knapMaxWeight;
-		var maxVal = knapMaxVal; 
 		var currentknapsackWeight = 0;
 		var currentknapsackValue = 0;
 		var event_handler = eventHandler();
 
 		function initPosition(){
 			for (var item in items){
-				items[item].location = "Home";
+				items[item].loc = "Fridge";
 			}
 			event_handler.trigger("initialized");
 
 		}
 		function moveObject(item){
 
-			if (item.location == "Home"){
+			if (item.loc == "Fridge"){
 				if (currentknapsackWeight+item.itemWeight<=maxWeight){
-					item.location = "Knapsack";
-					knapsackWeight-=item.itemWeight;
-					knapsackValue-=item.itemValue;
+					item.loc = "Knapsack";
+					currentknapsackWeight-=item.itemWeight;
+					currentknapsackValue-=item.itemValue;
 				}
 
 				else{
@@ -58,21 +57,21 @@ var knapsack = (function(){
 				}
 			}
 
-			else if (item.location == "Knapsack"){
-				item.location = "Home";
-				knapsackWeight+=item.itemWeight;
-				knapsackValue+=item.itemValue;
+			else if (item.loc == "Knapsack"){
+				item.loc = "Fridge";
+				currentknapsackWeight+=item.itemWeight;
+				currentknapsackValue+=item.itemValue;
 			}
 			event_handler.trigger("moved", item);
 		}
 		
 
 		function getWeight(){
-			return knapsackWeight;
+			return currentknapsackWeight;
 		}
 
 		function getValue(){
-			return knapsackValue;
+			return currentknapsackValue;
 		}
 
 		function getItems(){
@@ -86,27 +85,45 @@ var knapsack = (function(){
 
 	function Controller(model){
 
+		var event_handlers = eventHandler();
+
 		function setPosition(){
 			return model.initPosition();
 		}
 
-		function moveTheObject(){
-			return model.moveObject();
+		function clicked(){
+			if(!model.moveObject(item)){
+				event_handlers.trigger("fullsack",item);
+			}
+			else{
+				model.moveObject();
+			}
 		}
 
+		return{on:event_handlers.on, setPosition:setPosition, clicked:clicked};
 		
 	}
 
 	function View(div,model,controller,color){
-		//div that contains the images
-		var img_div = $('<div class = "imgdiv"></div>');
-		var knap_div = $('<div class = "knapdiv"></div>');
-		var home_div = $('<div class = "homediv"></div>');
-		img_div.append(knap_div,home_div);
 
-		var text_div  = $('<div class = "textdiv"></div>');
+		// var home_div = $('<div class = "homediv"></div>');
+		// var fridge = $('<img class = "fridge" id = "fridge" src = "fridge.jpg"></img>');
+		// var soda = $('<img class = "fridge" id = "soda" src = "soda.png" title= "Soda"></img>');
+		// var fruits = $('<img class = "fridge" id = "fruits" src = "fruits.png" />');
+		// home_div.append(fridge,soda,fruits);
 
-		$(div).append(img_div);
+		// var myItems = model.getItems();
+		// 	for (var thisItem in myItems){
+		// 		console.log(myItems[thisItem]);
+		// 		.append($('<div class = "specifics"></div>').text("$"+myItems[thisItem].itemValue+", "+myItems[thisItem].itemWeight+"kg"));
+		// 	}
+			
+
+		// var knapsack_div  = $('<div class = "knapdiv"></div>');
+		// var myKnapSack = $('<img class = "mySack" id = "idSack" src = "suitcase.jpg" />');
+		// knapsack_div.append(myKnapSack);
+
+		// div.append(knapsack_div,home_div);
 
 
 	return {};
@@ -114,10 +131,35 @@ var knapsack = (function(){
 }
 
 	function setup(div){
-		var model = Model();
+
+		var listOfItems = [];
+		listOfItems.push(
+			{
+				image: "soda.png",
+				loc: "Fridge",
+				itemWeight: "2",
+				itemValue: "4"
+			},{
+				image: "fruits.png",
+				loc: "Fridge",
+				itemValue: "10",
+				itemWeight: "6"
+			},{
+				image: "pizza.png",
+				loc: "Fridge",
+				itemValue:"15",
+				itemWeight:"8"
+			},{
+				image: "bread.png",
+				loc:"Fridge",
+				itemValue:"30",
+				itemWeight:"14"
+			}
+		);
+
+		var model = Model(listOfItems,30);
 		var controller = Controller(model);
-		var home_view = View(div,model,controller);
-		var sack_view = View(div,model,controller);
+		var view = View(div,model,controller);
 	}
 	return {setup:setup}
 }());
@@ -127,4 +169,11 @@ $(document).ready(function(){
 		knapsack.setup($(this));
 	});
 
+	$('.homediv').children().hover(function(){
+		$(this).siblings().stop().fadeTo(400,0.1);
+	}, function(){
+		$(this).siblings().stop().fadeTo(400,2);
+	});
 });
+
+

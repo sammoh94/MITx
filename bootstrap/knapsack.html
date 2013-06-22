@@ -1,13 +1,30 @@
 <html>
   <head>
     <title>The Knapsack Problem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src = "knapsack.js"></script>
     <link href = "knapsack.css" rel = "stylesheet"></link>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
   </head>
-  <body background = "brain.jpeg">
+  <body style = "background:orange">
      
-<div class = "knap"></div>
-    
+<div class = "knap">
+  <div class = "homediv">
+    <img class = "fridge" id = "fridge" src = "fridge.jpg"></img>
+    <img class = "fridge" id = "soda" src = "soda.png"></img>
+    <img class = "fridge" id = "fruits" src = "fruits.png" />
+  </div>
+  <div class = "textdiv">
+    <span style = "font-size:20pt;">Value of the Bag: <span class = "amount">$ 0</span></span>
+    <span style = "font-size:20pt;" class = "mass">Weight of the Bag: <span class = "weight">0 kg</span></span>
+  </div>
+  <div class = "knapdiv">
+    <img class = "mySack" id = "idSack" src = "suitcase.jpg" />
+  </div>
+</div>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>    
   </body>
 </html>
