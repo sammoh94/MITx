@@ -168,12 +168,8 @@ $(document).ready(function(){
 	$('.knap').each(function(){
 		knapsack.setup($(this));
 	});
+	$('[rel = tooltip]').tooltip();
 
-	$('.homediv').children().hover(function(){
-		$(this).siblings().stop().fadeTo(400,0.1);
-	}, function(){
-		$(this).siblings().stop().fadeTo(400,2);
-	});
 });
 
 
