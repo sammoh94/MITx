@@ -161,27 +161,35 @@ var knapsack = (function(){
 			}
 		);
 		
-		$('.fridge').on("click", function(event){
+		$('.homediv').on("click", function(event){
 			var clickedItemId = event.target.id;
 			var clickedItemLoc = event.target.className;
 			console.log(clickedItemId);
 			for (var itemId in listOfItems){
 				if (clickedItemId === listOfItems[itemId].name && clickedItemLoc == listOfItems[itemId].loc){
 					controller.clicked(listOfItems[itemId]);
+					clickedItemLoc = "knapsack";
+					listOfItems[itemId].loc = "knapsack";
 					event.target.remove();
-					console.log(listOfItems[itemId].loc)
+					$('.knapdiv').append(event.target);
 				}
 			}
 		});
 
-		$('.knapsack').on("click", function(event){
+		$('.knapdiv').on("click", function(event){
 			var clickedItemId = event.target.id;
 			var clickedItemLoc = event.target.className;
-			console.log(clickedItemId);
+			if (clickedItemLoc === "fridge"){
+				clickedItemLoc = "knapsack";
+			}
+			console.log(clickedItemLoc);
 			for (var itemId in listOfItems){
 				if (clickedItemId === listOfItems[itemId].name && clickedItemLoc == listOfItems[itemId].loc){
 					controller.clicked(listOfItems[itemId]);
-					console.log(listOfItems[itemId].loc)
+					clickedItemLoc = "fridge"; 
+					listOfItems[itemId].loc = "fridge";
+					event.target.remove();
+					$('.homediv').append(event.target);
 				}
 			}
 		});
