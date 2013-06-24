@@ -136,10 +136,9 @@ var knapsack = (function(){
 
 	function setup(div){
 
-		var model = Model(listOfItems,7);
+		var model = Model(listOfItems,14);
 		var controller = Controller(model);
 		var view = View(div,model,controller);
-		
 
 		var listOfItems = [];
 		listOfItems.push(
@@ -149,20 +148,30 @@ var knapsack = (function(){
 				itemWeight: 2,
 				itemValue: 4,
 			},{
-				name: "fruits",
+				name: "cereal",
 				loc: "fridge",
 				itemValue: 10,
 				itemWeight: 6
 			},{
 				name: "pizza",
 				loc: "fridge",
-				itemValue:15,
+				itemValue:11,
 				itemWeight:8
 			},{
 				name: "bread",
 				loc:"fridge",
-				itemValue:30,
+				itemValue:5,
+				itemWeight:4
+			},{
+				name:"blueberries",
+				loc:"fridge",
+				itemValue:20,
 				itemWeight:14
+			},{
+				name:"ramen",
+				loc:"fridge",
+				itemValue:3,
+				itemWeight:5
 			}
 		);
 		console.log(model.getMaxWeight());
@@ -178,6 +187,7 @@ var knapsack = (function(){
 				if (clickedItemId === listOfItems[itemId].name && clickedItemLoc == listOfItems[itemId].loc){
 					if (listOfItems[itemId].itemWeight+model.getWeight()<=model.getMaxWeight()){
 						controller.clicked(listOfItems[itemId]);
+						$('.bar').width($('.bar').width()+model.getWeight()+100);
 						$('.clicksound')[0].play();
 						console.log("played sound");
 						clickedItemLoc = "knapsack";
@@ -232,6 +242,10 @@ $(document).ready(function(){
 		knapsack.setup($(this));
 	});
 	
+	$('#help').popover({placement:'bottom'});
+	$('#elem').popover();
+	$('#elem1').popover();
+
 
 });
 

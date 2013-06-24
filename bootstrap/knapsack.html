@@ -9,27 +9,41 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
   </head>
 
-  <body style = "background:orange">
+  <body style = "background:#27DDB3">
     <audio class = "clicksound" src = "click.wav"></audio>
     <audio class = "clicksound" src = "back.mp3"></audio>
     <audio class = "clicksound" src = "alert.mp3"></audio>
 
-  <div class = "navbar navbar-fixed-top">
+  <div class = "navbar navbar-inverse">
       <div class = "navbar-inner">
         <div class = "container">
         <a class = "brand" href="home.html"><i class = "icon-home"></i></a>
-        <a class = "brand" href="scenario.html">Scenario</a>
+        <a id = "help" data-trigger = "hover" class = "brand" href="#" rel = "popover" data-original-title = "How to Play" data-content = "Try to maximize the value of the bag while staying within the weight limit."><i class = "icon-question"></i></a>
       </div>
     </div>
+  </div>
+
+  <div class = "page-header">
+    <h2 style = "font-family:Courier">Scenario:</h2>
+
+  </div>
+
+  <span class = "barspan" style = "margin-left:130px;font-size:14pt;color:#B72D2D">Space Used:</span><div class  = "progress progress-striped active" style = "width:30%; margin-left:250px;">
+    <div class = "bar"></div>
   </div>
 
 <div class = "knap">
 
   <div class = "homediv">
     
-    <img class = "fridge" id = "fridge" src = "fridge.jpg"></img>
-    <a href = "#" rel = "tooltip" title = "($4, 2kg)"><img class = "fridge" id = "soda" src = "soda.png"></img></a>
-    <a href = "#" rel = "tooltip" title = "($10, 6kg)"><img class = "fridge" id = "fruits" src = "fruits.png" /></a>
+    <img class = "fridge" id = "fridge" src = "fridge.png"></img>
+    <a id = "elem" data-trigger = "hover" href = "#" rel = "popover" data-content = "($4, 2kg)"><img class = "fridge" id = "soda" src = "soda.png"></img></a>
+    <a id = "elem1" data-trigger = "hover" href = "#" rel = "popover" data-content = "($5, 3kg)"><img class = "fridge" id = "cereal" src = "fruits.png" /></a>
+    <img class = "fridge" id = "pizza" src = "pizza.png"></img>
+    <img class = "fridge" id = "bread" src = "bread.png" />
+    <!-- <img class = "fridge" id = "blueberries" src = "blueberries.png"></img>
+    <img class = "fridge" id = "noodles" src = "noodles.png" /> -->
+
   </div>
 
 <div class = "textdiv">
