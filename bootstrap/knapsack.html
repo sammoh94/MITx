@@ -8,24 +8,47 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
   </head>
+
   <body style = "background:orange">
-     
+    <audio class = "clicksound" src = "click.wav"></audio>
+    <audio class = "clicksound" src = "back.mp3"></audio>
+    <audio class = "clicksound" src = "alert.mp3"></audio>
+
+  <div class = "navbar navbar-fixed-top">
+      <div class = "navbar-inner">
+        <div class = "container">
+        <a class = "brand" href="home.html"><i class = "icon-home"></i></a>
+        <a class = "brand" href="scenario.html">Scenario</a>
+      </div>
+    </div>
+  </div>
+
 <div class = "knap">
+
   <div class = "homediv">
     
     <img class = "fridge" id = "fridge" src = "fridge.jpg"></img>
     <a href = "#" rel = "tooltip" title = "($4, 2kg)"><img class = "fridge" id = "soda" src = "soda.png"></img></a>
     <a href = "#" rel = "tooltip" title = "($10, 6kg)"><img class = "fridge" id = "fruits" src = "fruits.png" /></a>
   </div>
-  <div class = "textdiv">
+
+<div class = "textdiv">
     <span style = "font-size:20pt;">Value of the Bag: $ <span class = "amount">0</span></span>
     <span style = "font-size:20pt;" class = "mass">Weight of the Bag: <span class = "weight">0</span>kg</span>
-  </div>
-  <div class = "knapdiv">
+</div>
+
+<div class = "knapdiv">
     <img class = "knapsackImg" id = "idSack" src = "suitcase.jpg" />
   </div>
+
+<div class = "alert" style = "visibility:hidden;background:red;color:black;">
+  <strong>You cannot take everything from the fridge!!!!!</strong>
 </div>
+
+</div>
+
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>    
+
   </body>
 </html>

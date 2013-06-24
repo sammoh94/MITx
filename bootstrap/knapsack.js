@@ -77,9 +77,13 @@ var knapsack = (function(){
 		function getItems(){
 			return items;
 		}
+
+		function getMaxWeight(){
+			return knapMaxWeight;
+		}
 		return {on: event_handler.on, initPosition: initPosition, 
 			moveObject: moveObject, getWeight: getWeight, 
-			getValue: getValue, getItems: getItems};
+			getValue: getValue, getItems: getItems, getMaxWeight: getMaxWeight};
 		
 	}
 
@@ -132,51 +136,68 @@ var knapsack = (function(){
 
 	function setup(div){
 
-		var model = Model(listOfItems,30);
+		var model = Model(listOfItems,7);
 		var controller = Controller(model);
 		var view = View(div,model,controller);
+		
 
 		var listOfItems = [];
 		listOfItems.push(
 			{
 				name: "soda",
 				loc: "fridge",
-				itemWeight: "2",
-				itemValue: "4"
+				itemWeight: 2,
+				itemValue: 4,
 			},{
 				name: "fruits",
 				loc: "fridge",
-				itemValue: "10",
-				itemWeight: "6"
+				itemValue: 10,
+				itemWeight: 6
 			},{
 				name: "pizza",
 				loc: "fridge",
-				itemValue:"15",
-				itemWeight:"8"
+				itemValue:15,
+				itemWeight:8
 			},{
 				name: "bread",
 				loc:"fridge",
-				itemValue:"30",
-				itemWeight:"14"
+				itemValue:30,
+				itemWeight:14
 			}
 		);
-		
+		console.log(model.getMaxWeight());
+
 		$('.homediv').on("click", function(event){
+
 			var clickedItemId = event.target.id;
 			var clickedItemLoc = event.target.className;
 			console.log(clickedItemId);
+
 			for (var itemId in listOfItems){
+
 				if (clickedItemId === listOfItems[itemId].name && clickedItemLoc == listOfItems[itemId].loc){
-					controller.clicked(listOfItems[itemId]);
-					clickedItemLoc = "knapsack";
-					listOfItems[itemId].loc = "knapsack";
-					event.target.remove();
-					$('.knapdiv').append(event.target);
+					if (listOfItems[itemId].itemWeight+model.getWeight()<=model.getMaxWeight()){
+						controller.clicked(listOfItems[itemId]);
+						$('.clicksound')[0].play();
+						console.log("played sound");
+						clickedItemLoc = "knapsack";
+						listOfItems[itemId].loc = "knapsack";
+						$('.weight').html(model.getWeight());
+						$('.amount').html(model.getValue());
+						$('.knapdiv').append(event.target);
+					}
+					else{
+						$('.clicksound')[2].play();
+						$('.alert').css("visibility","visible");
+					}	
 				}
-			}
+				
+
+			}		
 		});
 
 		$('.knapdiv').on("click", function(event){
+			
 			var clickedItemId = event.target.id;
 			var clickedItemLoc = event.target.className;
 			if (clickedItemLoc === "fridge"){
@@ -185,12 +206,18 @@ var knapsack = (function(){
 			console.log(clickedItemLoc);
 			for (var itemId in listOfItems){
 				if (clickedItemId === listOfItems[itemId].name && clickedItemLoc == listOfItems[itemId].loc){
+					$('.alert').css("visibility","hidden");
+					$('.clicksound')[1].play();
+					console.log("played sound");
 					controller.clicked(listOfItems[itemId]);
 					clickedItemLoc = "fridge"; 
 					listOfItems[itemId].loc = "fridge";
-					event.target.remove();
+					$('.weight').html(model.getWeight());
+					$('.amount').html(model.getValue());
+					console.log(clickedItemId+".png")
 					$('.homediv').append(event.target);
 				}
+
 			}
 		});
 
@@ -204,7 +231,7 @@ $(document).ready(function(){
 	$('.knap').each(function(){
 		knapsack.setup($(this));
 	});
-	$('[rel = tooltip]').tooltip();
+	
 
 });
 

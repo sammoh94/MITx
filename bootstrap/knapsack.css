@@ -69,6 +69,26 @@ span.mass{
 	height:19%;
 }
 
+.knapdiv #soda{
+	position:absolute;
+	left:13%;
+	bottom:16%;
+	width:20%;
+	height:30%;
+}
+
+.knapdiv #fruits{
+	position: absolute;
+	left:30%;
+	bottom: 24%;
+	width: 25%;
+	height:18%;
+}
+
+.alert{
+	background-color: black;
+	margin-top:100px;
+}
 
 
 
